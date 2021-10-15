@@ -13,4 +13,4 @@ class CeleryTasks(models.Model):
     finished = models.DateTimeField(null=True, blank=True)
     name = models.CharField(max_length=200)
     def __str__(self) -> str:
-        return f'{self.name} {self.started} to {self.finished}'
+        return f'{self.name} {self.started:%Y-%m-%d %H:%M:%S%z} to {self.finished:%Y-%m-%d %H:%M:%S%z}'
