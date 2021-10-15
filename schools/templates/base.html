@@ -1,0 +1,30 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block extracss %}
+    {% endblock %}
+  </head>
+  <body>
+    
+    <div class="container mt-3">
+    {% block body %}
+      <div class="card">
+        <div class="card-body" style="min-height: 500px;">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    {% endblock %}
+    </div>
+
+    <!-- JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% block extrajs %}
+    {% endblock %}
+  </body>
+</html>

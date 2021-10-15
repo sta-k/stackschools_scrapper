@@ -1,0 +1,10 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+    <strong>Schools</strong>
+    <li><a href="{% url 'schools:scrap' %}">Scrap <small>need to run it using celery</small></a></li>
+    <li><a href="{% url 'schools:home' %}">Display </a></li>
+</ul>
+{% endblock %}

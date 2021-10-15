@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block extracss %}
+    <link href="https://src.udiseplus.gov.in/resources/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="https://src.udiseplus.gov.in/resources/css/bootstrap-4.3.1.min.css" rel="stylesheet" type='text/css'>
+    <link href="https://src.udiseplus.gov.in/resources/css/responsive30.css" rel="stylesheet" type='text/css'>
+    <link href="https://src.udiseplus.gov.in/resources/css/dataTables.bootstrap4.min.css" rel="stylesheet" type='text/css'>
+    <link href="https://src.udiseplus.gov.in/resources/css/select2.min.css" rel="stylesheet" type='text/css'>
+    <link href="https://src.udiseplus.gov.in/resources/css/line-awesome-font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <link href="https://src.udiseplus.gov.in/resources/css/toastr.css" rel="stylesheet" type='text/css'>
+    <link href="https://src.udiseplus.gov.in/resources/css/toastr.min.css" rel="stylesheet" type='text/css'>
+{% endblock %}
+
+{% block content %}
+<h1>{{school.code}}</h1>
+{{school.html|safe}}
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" src="https://src.udiseplus.gov.in/resources/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="https://src.udiseplus.gov.in/resources/js/bootstrap-4.3.1.min.js"></script>
+{% endblock %}

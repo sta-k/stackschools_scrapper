@@ -1,0 +1,11 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+    <strong>Schools</strong>
+    {% for school in schools %}
+        <li><a href="{% url 'schools:show' school.code %}">{{school.code}}</a></li>
+        {% endfor %}
+</ul>
+{% endblock %}
