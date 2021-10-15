@@ -2,13 +2,13 @@
 
 Django Celery Scheduled Scrapper
 
-[Install Redis](https://stackoverflow.com/a/67293964/2351696)::
+### Install Redis](https://stackoverflow.com/a/67293964/2351696)::
 
     $ sudo add-apt-repository ppa:redislabs/redis
     $ sudo apt-get update
     $ sudo apt-get install redis
 
-[Celery setup for django](https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html)
+### [Celery setup for django](https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html)
 
 `mysite/celery.py`::
 
@@ -70,3 +70,29 @@ run celery::
 
     celery -A mysite worker -l INFO
 
+
+
+### Daemonization here is a nice tutorial
+
+add celery to supervisor::
+
+    $ apt-get install supervisor
+
+Then, add `/etc/supervisor/conf.d/celery_proj_worker.conf` file:
+
+    [program:projworker]
+    command=/var/www/djangoceleryscrapper/env/bin/celery -A mysite worker -l info
+    directory=/var/www/djangoceleryscrapper
+
+update it:
+
+    $ supervisorctl reread
+    $ supervisorctl update
+    $ supervisorctl start projworker
+
+now when anychanges in `tasks.py` you need to restart supervisor:
+
+    $ supervisorctl restart projworker
+
+    
+checkout log in: `$ /var/log/supervisor`
