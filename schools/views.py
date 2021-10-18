@@ -12,6 +12,6 @@ def show_school(request,code):
     return render(request,'schools/show.html',{'school':School.objects.get(code=code)})
 
 def scrap_schools(request):
-    task_scrap_schools.delay(request.POST['number_of_items']) # first 21 items
+    task_scrap_schools.delay(int(request.POST['number_of_items'])) # first 21 items
 
     return HttpResponse('<a href="/">back</a> Task Added Success')
