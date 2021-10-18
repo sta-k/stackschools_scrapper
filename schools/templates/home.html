@@ -4,7 +4,10 @@
 {% block content %}
 <ul>
     <strong>Schools</strong>
-    <li><a href="{% url 'schools:scrap' %}">Scrap <small>need to run it using celery</small></a></li>
+    <li>
+        <form method="POST" action="{% url 'schools:scrap' %}">{% csrf_token %} 
+            <input type="text" name="number_of_items" value="21"><input type="submit" value="Scrap"> 
+            <small>need to run it using celery</small></form></li>
     <li><a href="{% url 'schools:home' %}">Display </a></li>
 </ul>
 {% endblock %}
