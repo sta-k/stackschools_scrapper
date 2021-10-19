@@ -9,7 +9,7 @@ from schools.models import School, CeleryTasks
 def task_scrap_schools(limit=5000000):
     tasklog = CeleryTasks.objects.create(name="task_scrap_schools", started= timezone.now())
     get_text = lambda code: requests.post('https://src.udiseplus.gov.in/searchSchool/getSchoolDetail', data={'schoolIdforDashSearch': code})
-    start = School.objects.annotate(c=Max('code'))['c'] or 1000001
+    start = School.objects.aggregate(c=Max('code'))['c'] or 1000001
     for sid in range(start,start+limit):
         # if School.objects.filter(code = sid): 
         #     # if school data already exists then skip
