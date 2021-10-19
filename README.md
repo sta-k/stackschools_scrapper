@@ -2,7 +2,7 @@
 
 Django Celery Scheduled Scrapper
 
-### Install Redis](https://stackoverflow.com/a/67293964/2351696)::
+### [Install Redis](https://stackoverflow.com/a/67293964/2351696)::
 
     $ sudo add-apt-repository ppa:redislabs/redis
     $ sudo apt-get update
@@ -72,7 +72,7 @@ run celery::
 
 
 
-### Daemonization here is a nice tutorial
+### Daemonization using supervisor
 
 add celery to supervisor::
 
@@ -96,3 +96,19 @@ now when anychanges in `tasks.py` you need to restart supervisor:
 
     
 checkout log in: `$ /var/log/supervisor`
+
+[celery flower](https://flower.readthedocs.io/en/latest/install.html) for monitoring:
+
+    pip install flower
+
+Then, edit `/etc/supervisor/conf.d/celery_proj_worker.conf` file:
+
+    [program:projworker]
+    command=/var/www/djangoceleryscrapper/env/bin/celery -A mysite worker -l info
+    directory=/var/www/djangoceleryscrapper
+
+    [program:projflower]
+    command=/var/www/djangoceleryscrapper/env/bin/celery --broker=redis://localhost/0 flower
+
+
+visit: <http://80.85.157.162:5555/>
