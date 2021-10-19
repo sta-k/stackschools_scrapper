@@ -6,7 +6,7 @@ class School(models.Model):
     html = models.TextField()
 
     def __str__(self) -> str:
-        return self.code
+        return f'{self.code}'
 
 class CeleryTasks(models.Model):
     started = models.DateTimeField()
