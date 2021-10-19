@@ -6,7 +6,10 @@ class School(models.Model):
     html = models.TextField()
 
     def __str__(self) -> str:
-        return f'{self.code}'
+        resp = f'{self.code}'
+        if self.html == 'no data':
+            resp += '(empty)'
+        return resp
 
 class CeleryTasks(models.Model):
     started = models.DateTimeField()
