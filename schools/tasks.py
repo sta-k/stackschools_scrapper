@@ -3,7 +3,7 @@ import requests
 from django.utils import timezone
 from django.db.models import Max
 from schools.models import School, CeleryTasks
-
+from bs4 import BeautifulSoup
 
 @shared_task
 def task_scrap_schools(limit=5000000):
@@ -18,7 +18,13 @@ def task_scrap_schools(limit=5000000):
         r = get_text(sid)
         if r.text:
             # if some text in response create school
-            School.objects.create(code = sid,html = r.text)
+            soup = BeautifulSoup(r.text, 'html.parser')
+            resp = '<ul>'
+            for item in soup.find_all("span", "pFont14"):
+                resp+=f'<li>{item.get_text()}</li>'
+            resp+=f'<li>{soup.find_all("table", "mt-3")[0].get_text()}</li>'
+            resp+='</ul>'
+            School.objects.create(code = sid,html = resp)
         else:
             School.objects.create(code = sid,html = 'no data')
     tasklog.finished = timezone.now()
