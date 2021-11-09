@@ -26,7 +26,7 @@
         <thead><tr><th>Schools</th></tr></thead>
         <tbody>
         {% for school in schools %}
-        <tr><td><a href="{% url 'schools:show' school.code %}">{{school.code}}</a></td></tr>
+        <tr><td><a href="{% url 'schools:show' school.code %}">{{school}}</a></td></tr>
         {% endfor %}
         </tbody>
     </table>
