@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+
+{% block body %}
+<div style="margin: 20px;">
+    {% for message in messages %}
+    <div style="background-color: mediumseagreen; padding: 10px; margin-bottom: 20px;">
+        {{ message }}
+    </div>
+    {% endfor %}
+    <form class="pure-form" method="POST" action=".">{% csrf_token %} 
+        <input type="number" name="number_of_items" value="10" required="" />
+        <button type="submit" class="pure-button pure-button-primary">Scrap</button>
+    </form>
+    <br><br><br>
+    <table class="pure-table pure-table-bordered">
+        <thead><tr><th>{{task.name}}</th></tr></thead>
+        <tbody>
+            <tr><td>{{task.started}}</td></tr>
+            <tr><td>{{task.finished}}</td></tr>
+        </tbody>
+    </table>
+    <br><br><br>
+
+    <table class="pure-table pure-table-striped">
+        <thead><tr><th>Schools</th></tr></thead>
+        <tbody>
+        {% for school in schools %}
+        <tr><td><a href="{% url 'schools:show' school.code %}">{{school.code}}</a></td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

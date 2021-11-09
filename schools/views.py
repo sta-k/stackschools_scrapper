@@ -1,17 +1,35 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-import requests
-from .tasks import task_scrap_schools 
-from .models import School
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.views import View
 
-# Create your views here.
-def home(request):
-    return render(request,'schools/schools.html',{'schools':School.objects.order_by('-id')[:100]})
+import schools
+
+from .tasks import task_scrap_schools 
+from .models import School, CeleryTasks
+from schools import tasks
+
+
+class HomeView(View):
+    template_name = 'schools/home.html'
+    def get(self, request):
+        schools = School.objects.order_by('-id')[:10]
+        last_task = CeleryTasks.objects.order_by('-started').first()
+        return render(request,self.template_name,{'schools':schools,'task':last_task})
+
+    def post(self, request):
+        messages.success(request, 'Task Added Successfully!')
+        task_scrap_schools.delay(int(request.POST['number_of_items'])) # first 21 items
+        print(int(request.POST['number_of_items']))
+        return redirect('schools:home')
+        
 
 def show_school(request,code):
-    return render(request,'schools/show.html',{'school':School.objects.get(code=code)})
-
-def scrap_schools(request):
-    task_scrap_schools.delay(int(request.POST['number_of_items'])) # first 21 items
-
-    return HttpResponse('<a href="/">back</a> Task Added Success')
+    school= School.objects.get(code=code)
+    if not school.html.startswith('<ul>'):
+        return render(request,'schools/show.html',{'school':school})
+    
+    resp = {
+        'code': school.code,
+        'html':school.html
+    }
+    return render(request,'schools/show_new.html',{'school':resp})

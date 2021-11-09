@@ -11,9 +11,13 @@
     <link href="https://src.udiseplus.gov.in/resources/css/toastr.min.css" rel="stylesheet" type='text/css'>
 {% endblock %}
 
-{% block content %}
-<h1>{{school.code}}</h1>
-{{school.html|safe}}
+{% block body %}
+<div class="card">
+    <div class="card-body" style="min-height: 500px;">
+        <h1>{{school.code}}</h1>
+        {{school.html|safe}}
+    </div>
+</div>
 {% endblock %}
 
 {% block extrajs %}
