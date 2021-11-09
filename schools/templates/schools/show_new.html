@@ -1,5 +1,73 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>{{school.code}}</h1>
-{{school.html|safe}}
+<h1>{{code}}</h1>
+<table class="pure-table pure-table-horizontal">
+    <thead><tr><th colspan="4">School Profile</th></tr></thead>
+    <tbody><tr>
+    {% for key,value in school_profile.items %}
+        <td><b>{{key|title}}</b></td>
+        <td>{{value}}</td>
+        {% if forloop.counter|divisibleby:2 %}</tr><tr>{% endif %}
+    {% endfor %}
+    </tr></tbody>
+
+
+    <!--Basic Details -->
+    <thead><tr><th colspan="4">Basic Details</th></tr></thead>
+    <tbody><tr>
+    {% for key,value in basic_details.items %}
+        <td><b>{{key|title}}</b></td>
+        <td>{{value}}</td>
+        {% if forloop.counter|divisibleby:2 %}</tr><tr>{% endif %}
+    {% endfor %}
+    </tr></tbody>
+
+
+    <!--Facilities -->
+    <thead><tr><th colspan="4">Facilities</th></tr></thead>
+    <tbody><tr>
+    {% for key,value in facilities.items %}
+        <td><b>{{key|title}}</b></td>
+        <td>{{value}}</td>
+        {% if forloop.counter|divisibleby:2 %}</tr><tr>{% endif %}
+    {% endfor %}
+    </tr></tbody>
+
+
+    <!--Room Details -->
+    <thead><tr><th colspan="4">Room Details</th></tr></thead>
+    <tbody><tr>
+    {% for key,value in room_details.items %}
+        <td><b>{{key|title}}</b></td>
+        <td>{{value}}</td>
+        {% if forloop.counter|divisibleby:2 %}</tr><tr>{% endif %}
+    {% endfor %}
+    </tr></tbody>
+
+
+    <!--Enrolment of the Students -->
+    <thead><tr><th colspan="4">Enrolment of the Students</th></tr></thead>
+    <tbody>
+        <tr><th colspan="4">
+            <table class="pure-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>No. of Students</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nstudents in enrolment_of_the_students %}
+                    <tr>
+                        <td>{{ forloop.counter0}}</td>
+                        <td>{{nstudents}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </th></tr>
+        <tr><td><b>Total Teachers</b></td><td>{{total_teachers}}</td><td></td><td></td></td></tr>
+    </tbody>
+</table>
+{{html|safe}}
 {% endblock %}
