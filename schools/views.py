@@ -6,7 +6,7 @@ from .models import School
 
 # Create your views here.
 def home(request):
-    return render(request,'schools/home.html',{'schools':School.objects.all()})
+    return render(request,'schools/schools.html',{'schools':School.objects.order_by('-id')[:100]})
 
 def show_school(request,code):
     return render(request,'schools/show.html',{'school':School.objects.get(code=code)})
