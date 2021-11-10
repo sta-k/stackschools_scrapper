@@ -2,7 +2,6 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div style="margin: 20px;">
     {% for message in messages %}
     <div style="background-color: mediumseagreen; padding: 10px; margin-bottom: 20px;">
         {{ message }}
@@ -30,5 +29,4 @@
         {% endfor %}
         </tbody>
     </table>
-</div>
 {% endblock %}
