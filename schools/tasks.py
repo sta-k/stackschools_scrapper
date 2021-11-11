@@ -6,6 +6,13 @@ from django.db.models import Max
 from schools.models import School, CeleryTasks
 from bs4 import BeautifulSoup
 
+
+@shared_task
+def error_handler(request, exc, traceback):
+    last_task = CeleryTasks.objects.order_by('-started').first()
+    last_task.desc = f'{timezone.now()}: Task {request.id} raised exception: {exc!r}\n{traceback!r}'
+    last_task.save()
+
 @shared_task
 def task_scrap_schools(limit=5000000):
     errors={}

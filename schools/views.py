@@ -4,7 +4,7 @@ from django.views import View
 
 import schools
 
-from .tasks import task_scrap_schools 
+from .tasks import task_scrap_schools, error_handler
 from .models import School, CeleryTasks, School2 #, Village
 from .helpers import html_to_json
 
@@ -19,8 +19,11 @@ class HomeView(View):
 
     def post(self, request):
         messages.success(request, 'Task Added Successfully!')
-        print(int(request.POST['number_of_items']))
-        task_scrap_schools.delay(int(request.POST['number_of_items'])) # first 21 items
+        n_items = int(request.POST['number_of_items'])
+        print(n_items)
+        # Celery provides two function call options, delay() and apply_async(), to invoke Celery tasks.
+        # task_scrap_schools.delay(n_items) # first 21 items
+        task_scrap_schools.apply_async(link_error=error_handler.s(), args=(n_items,))
         return redirect('schools:home')
 """
 def todel():

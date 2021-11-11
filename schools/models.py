@@ -15,6 +15,7 @@ class CeleryTasks(models.Model):
     started = models.DateTimeField()
     finished = models.DateTimeField(null=True, blank=True)
     name = models.CharField(max_length=200)
+    desc = models.TextField(blank=True)
     def __str__(self) -> str:
         end = self.finished.strftime('%Y-%m-%d %H:%M:%S%z') if self.finished else ''
         return f'{self.name} {self.started:%Y-%m-%d %H:%M:%S%z} to {end}'
