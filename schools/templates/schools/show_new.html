@@ -11,6 +11,15 @@
     {% endfor %}
     </tr></tbody>
 
+    <thead><tr><th colspan="4">Address</th></tr></thead>
+    <tbody><tr>
+    {% for key,value in address.items %}
+        <td><b>{{key|title}}</b></td>
+        <td>{{value}}</td>
+        {% if forloop.counter|divisibleby:2 %}</tr><tr>{% endif %}
+    {% endfor %}
+    </tr></tbody>
+
 
     <!--Basic Details -->
     <thead><tr><th colspan="4">Basic Details</th></tr></thead>
