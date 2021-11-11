@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
-
-import schools
+from django.utils import timezone
 
 from .tasks import task_scrap_schools, error_handler
 from .models import School, CeleryTasks, School2 #, Village
@@ -55,10 +54,11 @@ def todel():
 """ 
     
 def save_to_schools2(request):
-    # todel()
-    # messages.success(request, 'Villages synced Successfully!')
-    # return redirect('schools:home')
-
+    if School2.objects.exists():
+        messages.success(request, 'School2 table is not empty !')
+        return redirect('schools:home')
+        
+    cur_time = timezone.now().strftime("%a, %d. %b %I:%M%p")
     items= []
     for school in School.objects.exclude(html__exact='').exclude(html='error'):
         try:
@@ -72,12 +72,21 @@ def save_to_schools2(request):
         s.code = school.code
         # s.address = Address.objects.get_or_create(**data['address'])[0]
         items.append(s)
+    
+    last_task = CeleryTasks.objects.order_by('-started').first()
+
+    last_task.desc = f'{last_task.desc} \n\n {cur_time}: finished. going to bulk create \n'
+    last_task.save()
     print('finished. going to bulk create')
-    for i in range(10):
+    nloop = len(items)//10000
+    for i in range(nloop):
+        last_task.desc = f'{last_task.desc} \n\n {cur_time}: {10000*i} - {10000*(i+1)} \n'
+        last_task.save()
         print(10000*i, 10000*(i+1))
         School2.objects.bulk_create(items[10000*i:10000*(i+1)])
-    print(100000)
-    School2.objects.bulk_create(items[100000:])
+    last_task.desc = f'{last_task.desc} \n\n {cur_time}: remaining items \n'
+    last_task.save()
+    School2.objects.bulk_create(items[nloop * 10000:])
     messages.success(request, 'Schools2 synced Successfully!')
     return redirect('schools:home')
 
