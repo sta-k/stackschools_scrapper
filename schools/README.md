@@ -40,3 +40,13 @@ https://src.udiseplus.gov.in/home
 
 schools in pakistan: https://www.urdupoint.com/education/school/attock/529/ges-ahmed-abad.html
 
+**remaining to scrap**: 
+
+range | exists
+-- | --
+11 - 20 | 0
+21 - 23 | 94231 
+23 - 30 | 0 
+31 - 40 | 0 
+41 - 50 | 0 
+51 - 60 | 195035 
