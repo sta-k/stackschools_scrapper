@@ -96,7 +96,7 @@ class School2(models.Model):
 
 	"""
 	code = models.IntegerField(default=1000000) # 7 digit integer
-	school_name = models.CharField(max_length=100)
+	school_name = models.CharField(max_length=200)
 	udise_code = models.CharField(max_length=11) # 11 digit integer may starts with 0
 	
 	# address
@@ -111,8 +111,8 @@ class School2(models.Model):
 	school_type = models.CharField(max_length=60)
 	class_from = models.SmallIntegerField()
 	class_to = models.SmallIntegerField()
-	state_management = models.CharField(max_length=100) #5-Private Unaided (Recognized)
-	national_management = models.CharField(max_length=100)
+	state_management = models.CharField(max_length=200) #5-Private Unaided (Recognized)
+	national_management = models.CharField(max_length=200)
 	status = models.CharField(max_length=60)
 	location = models.CharField(max_length=60)
 	aff_board_sec = models.CharField(max_length=60)

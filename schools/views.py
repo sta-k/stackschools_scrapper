@@ -54,17 +54,17 @@ def todel():
 """ 
     
 def save_to_schools2(request):
-    if School2.objects.exists():
-        messages.success(request, 'School2 table is not empty !')
-        return redirect('schools:home')
+    # if School2.objects.exists():
+    #     messages.success(request, 'School2 table is not empty !')
+    #     return redirect('schools:home')
         
     cur_time = timezone.now().strftime("%a, %d. %b %I:%M%p")
     items= []
-    for school in School.objects.exclude(html__exact='').exclude(html='error'):
+    for school in School.objects.exclude(html='no data').exclude(html='error'):
         try:
             data = html_to_json(school.html)
         except:
-            print(school.code)
+            print(school.code, school.html[:10])
             continue
         s = School2(**dict(data['school_profile'],**data['address'], **data['basic_details'],**data['facilities'],**data['room_details']))
         s.enrolment_of_the_students = ','.join(data['enrolment_of_the_students'])
@@ -72,7 +72,8 @@ def save_to_schools2(request):
         s.code = school.code
         # s.address = Address.objects.get_or_create(**data['address'])[0]
         items.append(s)
-    
+
+    # return redirect('schools:home')
     last_task = CeleryTasks.objects.order_by('-started').first()
 
     last_task.desc = f'{last_task.desc} \n\n {cur_time}: finished. going to bulk create \n'

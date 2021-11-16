@@ -3,6 +3,8 @@ import requests
 from requests.exceptions import ConnectionError
 from django.utils import timezone
 from django.db.models import Max
+from django.db import DataError
+
 from schools.models import School, CeleryTasks
 from bs4 import BeautifulSoup
 
@@ -34,6 +36,10 @@ def task_scrap_schools(limit=5000000):
             else:
                 r = get_text(sid)
                 errors[sid]='error'
+        except DataError:
+            School.objects.create(code = sid,html = 'data error')
+            continue
+        
 
         
         if r.text:
