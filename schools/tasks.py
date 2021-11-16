@@ -49,7 +49,7 @@ def task_scrap_schools(limit=5000000):
                 resp+=f'<li>{item.get_text()}</li>'
             resp+=f'<li>{soup.find_all("table", "mt-3")[0].get_text()}</li>'
             resp+='</ul>'
-            resp=resp.replace('’',"'") # fix for django.db.utils.DataError: character with byte sequence 0xe2 0x80 0x99 in encoding "UTF8" has no equivalent in encoding "LATIN1"
+            resp=resp.replace('’',"'").replace('–','-') # fix for django.db.utils.DataError: character with byte sequence 0xe2 0x80 0x99 in encoding "UTF8" has no equivalent in encoding "LATIN1"
             School.objects.create(code = sid,html = resp)
         else:
             School.objects.create(code = sid,html = 'no data')
